@@ -1,16 +1,16 @@
 package main
 
 import (
-	"log"
 	"os"
 
 	"github.com/brunoquindeler/go-cli/app"
+	"github.com/sirupsen/logrus"
 )
 
 func main() {
 	aplicacao := app.Gerar()
 
 	if err := aplicacao.Run(os.Args); err != nil {
-		log.Fatal(err)
+		logrus.Fatal(err)
 	}
 }

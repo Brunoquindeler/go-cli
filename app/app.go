@@ -1,20 +1,20 @@
 package app
 
 import (
-	"fmt"
-	"log"
 	"net"
 
+	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
 )
 
 // Gerar vai retornar a aplicação de linha de comando pronta para ser executada.
 func Gerar() *cli.App {
 	app := cli.NewApp()
+	logrus.SetFormatter(&logrus.TextFormatter{ForceColors: true})
 
 	app.Name = "Buscador de IPs e Nome"
 
-	app.Usage = "Busca IPs e Nome de servidores na internet."
+	app.Usage = "Busca IPs e nome de servidores na internet."
 
 	flags := []cli.Flag{
 		cli.StringFlag{
@@ -46,13 +46,13 @@ func buscarIPs(c *cli.Context) {
 
 	ips, err := net.LookupIP(host)
 	if err != nil {
-		log.Fatal(err)
+		logrus.Fatal(err)
 	}
 
-	fmt.Printf("Host: %s\n", host)
+	logrus.Info("Host: ", host)
 
 	for _, ip := range ips {
-		fmt.Println(ip)
+		logrus.Info(ip)
 	}
 }
 
@@ -61,12 +61,12 @@ func buscarServidores(c *cli.Context) {
 
 	servidores, err := net.LookupNS(host)
 	if err != nil {
-		log.Fatal(err)
+		logrus.Fatal(err)
 	}
 
-	fmt.Printf("Host: %s\n", host)
+	logrus.Info("Host: ", host)
 
 	for _, servidor := range servidores {
-		fmt.Println(servidor.Host)
+		logrus.Info(servidor.Host)
 	}
 }
